@@ -1,4 +1,5 @@
 require 'sqlite3'
+require 'base64'
 
 begin
 
@@ -32,7 +33,7 @@ begin
       # output user image to current directory, named based on user name and ID
       image = row['image']
       f = File.new "#{row['name']}_#{row['id']}_output.png", "wb"
-      f.write image
+      f.write(Base64.decode64(image))
       f.close if f
     end
 
@@ -54,6 +55,6 @@ rescue SQLite3::Exception, SystemCallError => e
 
 ensure
 
-    db.close if db
+  db.close if db
 
 end

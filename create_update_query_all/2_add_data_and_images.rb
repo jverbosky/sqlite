@@ -2,6 +2,7 @@
 # so can run this twice to build DB w/duplicate user records if desired
 
 require 'sqlite3'
+require 'base64'
 
 begin
 
@@ -37,9 +38,10 @@ begin
     v_quote = user[5]
 
     # prepare image for database insertion
-    file_open = File.open "./public/images/user_#{v_id}.png" , 'rb'
-    image = file_open.read
-    file_open.close if file_open
+    # file_open = File.open "./public/images/user_#{v_id}.png" , 'rb'
+    # image = file_open.read
+    file_open = File.binread("./public/images/user_#{v_id}.png")
+    image = Base64.encode64(file_open)
     blob = SQLite3::Blob.new image
 
     # insert user data into details table
