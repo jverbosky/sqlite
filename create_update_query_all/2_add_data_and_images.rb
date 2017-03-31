@@ -37,11 +37,9 @@ begin
     v_num_3 = user[4]
     v_quote = user[5]
 
-    # prepare image for database insertion
-    # file_open = File.open "./public/images/user_#{v_id}.png" , 'rb'
-    # image = file_open.read
+    # prepare image for database insertion (use strict base64 encoding)
     file_open = File.binread("./public/images/user_#{v_id}.png")
-    image = Base64.encode64(file_open)
+    image = Base64.strict_encode64(file_open)
     blob = SQLite3::Blob.new image
 
     # insert user data into details table

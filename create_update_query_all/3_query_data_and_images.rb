@@ -30,10 +30,10 @@ begin
       puts "Favorite number 3: #{row['num_3']}"
       puts "Quote: #{row['quote']}"
 
-      # output user image to current directory, named based on user name and ID
+      # output user image to current directory, use strict base64 decoding
       image = row['image']
       f = File.new "#{row['name']}_#{row['id']}_output.png", "wb"
-      f.write(Base64.decode64(image))
+      f.write(Base64.strict_decode64(image))
       f.close if f
     end
 
